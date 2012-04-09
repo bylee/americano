@@ -11,27 +11,15 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.escode.coders">
-		<level value="info" />
+	<logger name="americano">
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
+	<logger name="org.springframework">
 		<level value="info" />
 	</logger>
 	
-	<logger name="org.springframework.beans">
-		<level value="info" />
-	</logger>
-	
-	<logger name="org.springframework.context">
-		<level value="info" />
-	</logger>
-
-	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
-
 	<!-- Root Logger -->
 	<root>
 		<priority value="warn" />
