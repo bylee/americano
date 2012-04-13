@@ -1,7 +1,12 @@
 package americano.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Book
 {
+	@Id
 	protected String id;
 	
 	protected String title;

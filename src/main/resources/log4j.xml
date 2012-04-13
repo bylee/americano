@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="americano">
-		<level value="debug" />
+		<level value="trace" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
