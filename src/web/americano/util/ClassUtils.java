@@ -2,7 +2,9 @@ package americano.util;
 
 import java.lang.reflect.Field;
 
-public class ClassUtils
+public class
+ClassUtils
+extends escode.util.ClassUtils
 {
 	protected ClassUtils() {}
 	

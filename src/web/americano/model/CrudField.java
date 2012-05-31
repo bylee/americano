@@ -9,8 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 import americano.util.ClassUtils;
-import americano.util.IStringConstants;
-import americano.util.StringUtils;
+import escode.constant.IStringConstants;
+import escode.util.StringUtils;
 
 public class CrudField
 {
@@ -30,6 +30,15 @@ public class CrudField
 			if ( null != value )
 			{
 				fieldDef.setValue( value.toString() );
+			}
+			final Class<?> fieldType = field.getType();
+			if ( byte[].class.equals( fieldType ) )
+			{
+				fieldDef.setType( "binary" );
+			}
+			else
+			{
+				fieldDef.setType( "string" );
 			}
 			for ( final Annotation annotation : annotations )
 			{

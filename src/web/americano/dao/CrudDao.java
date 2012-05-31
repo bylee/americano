@@ -3,18 +3,12 @@ package americano.dao;
 import java.text.MessageFormat;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class CrudDao
 extends AbstractDao
 {
-	public
-	void
-	insert(
-		final Object obj
-	)
-	{
-		save( obj );
-	}
-	
 	public List<?>
 	list(
 		final String modelName
@@ -27,20 +21,6 @@ extends AbstractDao
 		logger.debug( "Result for {} :{}", modelName, result );
 		
 		return result;
-	}
-	
-	public Object
-	get(
-		final Class<?> modelType,
-		final String id
-	)
-	{
-		logger.trace( "Get {} from {}", id, modelType );
-		final Object ret = getSession().get( modelType, id );
-		
-		logger.debug( "Result for {} :{}", id, ret );
-		
-		return ret;
 	}
 	
 }

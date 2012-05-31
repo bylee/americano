@@ -24,7 +24,7 @@
 					<tbody>
 					<c:forEach var="item" items="${models }">
 						<tr>
-							<td><a href="${pageContext.request.contextPath}/${model.path }/${item.key}"><c:out value="${item.value}" /></a></td>
+							<td><a href="${pageContext.request.contextPath}/${model.path }/${item.id}"><c:out value="${item.model}" /></a></td>
 						</tr>
 					</c:forEach>
 					

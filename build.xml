@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="americano" default="help">
+   	<property file="build-common.properties" />
+   	<property file="build.properties" />
+	
+	<import file="build-common.xml" />
+
+    <target name="help" >
+    	<echo message="사용방법 : ant [task]" />
+    	<echo message="사용가능한 Task" />
+    	<echo message="---------------------------------------------------" />
+    	<echo message="dist, doc, test" />
+    	<echo message="dist : 배포판을 생성합니다." />
+    	<echo message="doc  : 관련 문서를 생성합니다." />
+    	<echo message="test : 배포판이 이상없는지 확인합니다." />
+    </target>
+    
+</project>

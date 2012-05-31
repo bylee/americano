@@ -8,7 +8,6 @@ import javax.persistence.Table;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 @Entity
-@Table( name="users" )
 public class
 User
 {
@@ -17,6 +16,12 @@ User
 	
 	@Column
 	protected String password;
+	
+	@Column
+	protected String iconId;
+	
+	@Column
+	protected String pictureId;
 	
 	public User()
 	{
@@ -63,6 +68,26 @@ User
 	public void setPassword( String password )
 	{
 		this.password = password;
+	}
+	
+	public String getIcon()
+	{
+		return this.iconId;
+	}
+	
+	public void setIcon( final String iconId )
+	{
+		this.iconId = iconId;
+	}
+	
+	public String getPicture()
+	{
+		return this.pictureId;
+	}
+	
+	public void setPicture( final String pictureId )
+	{
+		this.pictureId = pictureId;
 	}
 	
 	/* (non-Javadoc)

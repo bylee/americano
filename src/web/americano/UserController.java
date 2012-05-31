@@ -1,52 +1,46 @@
 package americano;
 
+import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import americano.model.Book;
+import americano.model.User;
+import americano.service.UserService;
+
+@RequestMapping( "/user" )
 @Controller
 public class
 UserController
+extends AbstractController
 {
-	protected String
-	list(
-		Model model
+	@Autowired
+	protected UserService userService;
+
+	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
+	public @ResponseBody User
+	getUser(
+		@PathVariable( "id" ) String id
 	)
 	{
-		return "list_users";
+		final User user = userService.getUser( id );
+		
+		return user;
 	}
-	
-	@RequestMapping( value = "/users", method = RequestMethod.GET )
-	public String
-	createForm(
-		@RequestParam( value = "form", required = false ) final String bForm,
-		Model model
+
+	@RequestMapping( value = "/{user}/books", method = RequestMethod.GET )
+	public Collection<Book>
+	formBooks(
+		@PathVariable( "user" ) final String username
 	)
 	{
-		if ( null != bForm )
-		{
-			return list( model );
-		}
-		return "create_user";
+		return userService.getBooks( username );
 	}
 	
-	@RequestMapping( value = "/users", method = RequestMethod.POST )
-	public ModelAndView
-	create(
-	)
-	{
-		return null;
-	}
-	
-	@RequestMapping( value = "/users1", method = RequestMethod.GET )
-	public ModelAndView
-	show()
-	{
-		final ModelAndView ret = new ModelAndView();
-		return ret;
-	}
 
 }

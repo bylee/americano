@@ -20,10 +20,11 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 
 import escode.util.MapUtils;
 
-public class SessionInViewFilter
+public class
+SessionInViewFilter
 extends OpenSessionInViewFilter
 {
-	protected FlushMode flushMode = FlushMode.MANUAL;
+	protected FlushMode flushMode = getDefaultFlushMode();
 	
 	protected Map<String, FlushMode> str2flushMode = MapUtils.convert( new Object[][] {
 		new Object[] { "manual", FlushMode.MANUAL },
@@ -32,12 +33,18 @@ extends OpenSessionInViewFilter
 		new Object[] { "always", FlushMode.ALWAYS },
 	} );
 	
-	protected FlushMode getDefaultFlushMode()
+	protected
+	FlushMode
+	getDefaultFlushMode()
 	{
-		return FlushMode.MANUAL;
+		return FlushMode.AUTO;
 	}
 
-	public void setFlushMode( String mode )
+	public
+	void
+	setFlushMode(
+		final String mode
+	)
 	{
 		if ( null == mode )
 		{
@@ -45,12 +52,14 @@ extends OpenSessionInViewFilter
 			logger.info( "change to default flush mode :" + this.flushMode );
 			return ;
 		}
-		FlushMode flushMode = str2flushMode.get( mode.toLowerCase() );
+		
+		final FlushMode flushMode = str2flushMode.get( mode.toLowerCase() );
 		if ( null == flushMode )
 		{
 			logger.warn( "unknown flush mode :" + mode );
 			return ;
 		}
+		logger.info( "Change flush mode :" + this.flushMode + " -> " + flushMode );
 		this.flushMode = flushMode;
 	}
 
@@ -103,9 +112,10 @@ extends OpenSessionInViewFilter
 	{
 		final SessionFactory sessionFactory = lookupSessionFactory();
 		final SessionHolder sessionHolder = 
-			(SessionHolder)TransactionSynchronizationManager.unbindResource( sessionFactory );
+			(SessionHolder) TransactionSynchronizationManager.unbindResource( sessionFactory );
 		logger.debug("Closing Hibernate Session in SessionInViewFilter");
-		Session session = sessionHolder.getSession();
+		final Session session = sessionHolder.getSession();
+		session.flush();
 		SessionFactoryUtils.closeSession( session );
 
 	}
@@ -115,6 +125,10 @@ extends OpenSessionInViewFilter
 	throws ServletException, IOException
 	{
 		boolean bParticipate = createSession();
+		if ( logger.isTraceEnabled() )
+		{
+			logger.trace( "session's participation :" + bParticipate );
+		}
 
 		try
 		{
@@ -124,7 +138,7 @@ extends OpenSessionInViewFilter
 		{
 			if ( bParticipate )
 			{
-				destroy();
+				destroySession();
 			}
 		}
 	}

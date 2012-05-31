@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="common-build" >
+   	<property file="build-common.properties" />
+
+	<!-- 빈 디렉토리를 준비한다 -->
+	<macrodef name="bx-prepare">
+		<attribute name="dir"/>
+		<sequential>
+			<delete dir="@{dir}" quiet="true"/>
+			<mkdir dir="@{dir}" />
+		</sequential>
+	</macrodef>
+	
+	<!-- 빌드 작업용 디렉토리를 삭제한다. -->
+	<macrodef name="bx-clean">
+		<attribute name="dir" default="${dir.build}"/>
+		<sequential>
+			<delete dir="@{dir}" quiet="true"/>
+		</sequential>
+	</macrodef>
+
+	<!--
+		소스 디렉토리의 내용을 빌드 디렉토리에 복사한다.
+		소스 디렉토리는 src.XXX와 같은 형태이다.
+	-->
+	<macrodef name="bx-rake-src">
+		<attribute name="src" default="." />
+		<attribute name="build" default="${dir.build}" />
+		<sequential>
+			<!-- 빌드 디렉토리를 준비한다 -->
+			<bx-prepare dir="@{build}" />
+			<!-- src/XXX 디렉토리의 내용을 빌드 디렉토리에 복사한다. -->
+			<copy enablemultiplemappings="true" todir="@{build}">
+				<fileset dir="@{src}">
+					<include name="src/*/**/*"/>
+				</fileset>
+				<mapper type="regexp" from="^src[\\/][-_a-zA-Z0-9]+[\\/](.*)" to="\1" />
+			</copy>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="bx-conversion">
+		<attribute name="src" default="${dir.build}" />
+		<attribute name="target" default="${dir.test.report}/coverage.em" />
+		<sequential>
+			<emma enabled="true">
+				<instr instrpath="@{src}" metadatafile="@{target}" mode="overwrite" merge="true" >
+					 <filter excludes="*Test" />
+				</instr>
+			</emma>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="bx-rake-test">
+		<attribute name="src" default="${dir.test.src}" />
+		<attribute name="build" default="${dir.build}" />
+		<sequential>
+			<copy todir="@{build}">
+				<fileset dir="@{src}" />
+			</copy>
+		</sequential>
+	</macrodef>
+	
+	<!-- 빌드 버젼을 생성한다. -->
+	<macrodef name="bx-ver">
+		<sequential>
+			<mkdir dir="${dir.dist}"/>
+	    	<buildnumber file="${file.buildnum}" />
+			<property name="version" value="${version.major}.${version.minor}.${version.fixxed}-b${build.number}" />
+			<property name="version.suffix" value="-${version}" />
+		</sequential>
+	</macrodef>
+
+	<!-- 자바 컴파일을 수행한다. -->
+	<macrodef name="bx-javac">
+		<attribute name="src" default="${dir.build}" />
+		<attribute name="encoding" default="${encoding.java}" />
+		<attribute name="version" default="${javac.target}" />
+		<attribute name="debug" default="${javac.debug}" />
+		<attribute name="debuglevel" default="${javac.debuglevel}" />
+		<sequential>
+	    	<javac
+	    		srcdir="@{src}"
+	    		encoding="@{encoding}"
+	    		source="@{version}"
+	    		target="@{version}"
+	    		debug="@{debug}"
+	    		debuglevel="@{debuglevel}"
+	    	>
+	    		<classpath>
+	    			<fileset dir="${dir.lib}" />
+	    			<fileset dir="${dir.lib.web}" />
+	    		</classpath>
+	    	</javac>
+		</sequential>
+	</macrodef>
+
+	<!--  -->
+	<macrodef name="bx-javac-test">
+		<attribute name="src" default="${dir.build}" />
+		<attribute name="encoding" default="${encoding.java}" />
+		<attribute name="version" default="${javac.target}" />
+		<attribute name="debug" default="${javac.debug}" />
+		<attribute name="debuglevel" default="${javac.debuglevel}" />
+		<sequential>
+	    	<javac
+	    		srcdir="@{src}"
+	    		encoding="@{encoding}"
+	    		source="@{version}"
+	    		includes="**/*Test.java"
+	    		target="@{version}"
+	    		debug="@{debug}"
+	    		debuglevel="@{debuglevel}"
+	    	>
+	    		<classpath>
+	    			<fileset dir="${dir.lib}" />
+	    			<fileset dir="${dir.test.lib}" />
+	    			<fileset file="${file.dist}" />
+	    		</classpath>
+	    	</javac>
+		</sequential>
+	</macrodef>
+
+	<!--  -->
+	<macrodef name="bx-jar">
+		<attribute name="manifest" default="${file.manifest}" />
+		<attribute name="dest" default="${file.dist}" />
+		<attribute name="base" default="${dir.build}" />
+		<attribute name="version" default="${version}" />
+		<sequential>
+	    	<jar
+	    		basedir="@{base}"
+	    		destfile="@{dest}"
+	    		manifest="@{manifest}"
+	    	/>
+		</sequential>
+	</macrodef>
+	
+
+	<macrodef name="bx-rake-lib">
+		<attribute name="base" default="${dir.build}" />
+		<sequential>
+			<copy todir="@{base}/lib">
+				<fileset dir="${dir.lib}">
+				</fileset>
+			</copy>
+		</sequential>
+	</macrodef>
+	<macrodef name="bx-bundle">
+		<attribute name="manifest" default="${file.manifest}" />
+		<attribute name="dest" default="${file.dist}" />
+		<attribute name="base" default="${dir.build}" />
+		<attribute name="version" default="${version}" />
+		<sequential>
+			<dirname property="parent" file="@{dest}"/>
+			<mkdir dir="${parent}" />
+			
+			<mkdir dir="@{base}/META-INF"/>
+			<!-- copy file="@{manifest}" todir="@{base}/META-INF" />
+			<replace file="@{base}/META-INF/MANIFEST.MF" token="qualifier" value="b${build.number}"></replace>
+	    	<jar
+	    		basedir="@{base}"
+	    		destfile="@{dest}"
+	    		manifest="@{base}/META-INF/MANIFEST.MF"
+	    	/-->
+	    	<jar
+	    		basedir="@{base}"
+	    		destfile="@{dest}"
+	    	/>
+		</sequential>
+	</macrodef>
+	<macrodef name="bx-junit">
+		<attribute name="dest" default="${dir.test.report}" />
+		<attribute name="html" default="${dir.build}" />
+		<attribute name="src" default="${dir.build}" />
+		<attribute name="encoding" default="${encoding.java}" />
+		<sequential>
+			<sleep seconds="3" />
+			<junit haltonfailure="no" printsummary="yes" fork="true" >
+			    <jvmarg value="-Demma.coverage.out.file=test/report/coverage.ec" />
+			    <jvmarg value="-Demma.coverage.out.merge=true" />
+				<classpath>
+					<fileset dir="${dir.lib}" />
+					<fileset dir="${dir.test.lib}" />
+					<fileset file="${file.dist.test}" />
+				</classpath>
+				<formatter type="xml" />
+				<batchtest todir="@{dest}">
+					<fileset dir="@{src}">
+						<include name="**/*Test.java" />
+					</fileset>
+				</batchtest>
+			</junit>
+			
+			<junitreport todir="@{dest}">
+				<fileset dir="@{dest}">
+					<include name="TEST-*.xml" />
+				</fileset>
+				<report format="frames" todir="@{dest}" />
+			</junitreport>
+			
+			<emma enabled="true">
+			    <report >
+			        <infileset dir="${dir.test.report}" includes="*.em, *.ec" />
+			        <xml outfile="${dir.test.report}/coverage.xml" depth="method"  />
+			    </report>
+			</emma>
+
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="bx-javadoc">
+		<attribute name="src" default="${dir.build}" />
+		<attribute name="dest" default="${dir.doc}/javadoc" />
+		<attribute name="encoding" default="${encoding.java}" />
+		<sequential>
+			<javadoc
+				sourcepath="@{src}"
+				destdir="@{dest}"
+				encoding="@{encoding}"
+			>
+	    		<classpath>
+	    			<fileset dir="${dir.lib}" />
+	    		</classpath>
+				<bottom>Copyright © 2011 ES-Code Co., Ltd. All rights reserved.</bottom>
+			</javadoc>
+		</sequential>
+	</macrodef>
+
+    <target name="doc" depends="dist" description="Documentation for java source">
+    	<bx-rake-src />
+    	<bx-javadoc />
+    	<bx-jar dest="${file.dist.javadoc}" />
+    	<bx-clean />
+    </target>
+	
+    <target name="dist" description="Distribute module">
+		<bx-ver />
+    	<bx-rake-src />
+    	<bx-javac />
+    	<bx-bundle />
+    	<bx-clean />
+    </target>
+
+    <target name="test" description="Test module">
+		<path id="emma.lib">
+		    <pathelement location="${dir.test.lib}/emma.jar" />
+		    <pathelement location="${dir.test.lib}/emma_ant.jar" />
+		</path>
+		<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+    	
+		<bx-prepare dir="${dir.test.report}"/>
+		<bx-ver />
+    	<bx-rake-src />
+    	<bx-javac />
+    	<bx-rake-test />
+    	<bx-javac-test />
+    	<bx-conversion />
+    	<bx-jar dest="${file.dist.test}" />
+    	<bx-junit />
+    	<bx-clean />
+    </target>
+	
+	<target name="deploy" depends="dist">
+		<bx-prepare dir="${dir.build}"/>
+		<copy todir="${dir.build}">
+			<fileset dir="${dir.web}" />
+		</copy>
+		<copy todir="${dir.build}/WEB-INF/lib">
+			<fileset file="${file.dist}" />
+		</copy>
+			
+		<jar destfile="${file.dist.war}" basedir="${dir.build}">
+		</jar>
+		<bx-clean/>
+	</target>
+
+</project>
+		
