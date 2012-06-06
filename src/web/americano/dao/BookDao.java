@@ -1,7 +1,7 @@
 package americano.dao;
 
 import java.text.MessageFormat;
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +13,9 @@ extends AbstractDao
 {
 	
 	@SuppressWarnings("unchecked")
-	public Collection<Book> getBooksOf( final String userId )
+	public List<Book> getBooksOf( final String userId )
 	{
-		return (Collection<Book>) find( MessageFormat.format( "from Book book where book.owner = '{}", userId ) );
+		return (List<Book>) find( MessageFormat.format( "from Book book where book.owner = '{}", userId ) );
 	}
 	
 

@@ -17,15 +17,15 @@ public class UserService
 	@Autowired
 	protected BookDao bookDao;
 	
-	public User getUser( final String username )
+	public User getUser( final String userId )
 	{
-		return userDao.getUser( username );
+		return userDao.getUser( userId );
 		
 	}
 
-	public List<Book> getBooks( String username )
+	public List<Book> getBooks( String userId )
 	{
-		bookDao.getBooksOf( username );
+		return bookDao.getBooksOf( userId );
 	}
 
 
