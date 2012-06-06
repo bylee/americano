@@ -15,10 +15,15 @@ $(function() {
     
     url: function () {
       if (this.isNew()) {
-        return 'book';
+        return '/book';
       } else {
-        return 'book/'+ this.id;
+        return '/book/'+ this.id;
       }
+    },
+    
+    parse: function (response) {
+      console.log(response);
+      return response;
     }
     
   });
@@ -27,12 +32,12 @@ $(function() {
     model: Book,
     
     url: function () {
-      return 'user/1/books/';
+      return '/user/1/books/';
     },
     
     parse: function (response) {
       console.log(response);
-      return respose.results;
+      return response;
     }
   });
   
@@ -72,7 +77,7 @@ $(function() {
     initialize: function() {
       bookList.bind('add', this.addBook, this);
       bookList.bind('all', this.render, this);
-      bookList.fetch();
+      bookList.fetch({add:true});
     },
     
     render: function() {
@@ -101,8 +106,8 @@ $(function() {
     
     createBook: function () {
       var bookData  = {
-          title : this.$('#book-form book-title').val(),
-          subtitle : this.$('#book-form book-subtitle').val()
+          title : this.$('input:text[name=book-title]').val(),
+          subtitle : this.$('input:text[name=book-subtitle]').val()
       };
       
       var book = new Book((bookData));
