@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import americano.model.Book;
 import americano.model.User;
+import americano.service.BookService;
 import americano.service.UserService;
 
 @RequestMapping( "/user" )
@@ -22,6 +22,9 @@ extends AbstractController
 {
 	@Autowired
 	protected UserService userService;
+	
+	@Autowired
+	protected BookService bookService;
 
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
 	public @ResponseBody User
@@ -34,22 +37,11 @@ extends AbstractController
 		return user;
 	}
 
-	@RequestMapping( value = "/{user}/books.html", method = RequestMethod.GET )
-	public ModelAndView
-	formBooks(
-		@PathVariable( "user" ) final String username
-	)
-	{
-		final ModelAndView ret = new ModelAndView( "user/books" );
-		
-		return ret;
-	}
-
-	@RequestMapping( value = "/{user}/books", method = RequestMethod.GET )
+	@RequestMapping( value = "/{id}/books", method = RequestMethod.GET )
 	public
 	@ResponseBody Collection<Book>
 	getBooks(
-		@PathVariable( "user" ) final String username
+		@PathVariable( "id" ) final String username
 	)
 	{
 		return userService.getBooks( username );
