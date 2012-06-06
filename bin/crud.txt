@@ -1,3 +1,0 @@
-americano.model.User
-americano.model.Book
-americano.model.Binary
