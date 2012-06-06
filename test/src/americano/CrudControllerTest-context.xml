@@ -35,8 +35,12 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean class="americano.service.UserServiceMock"></bean>
+	<bean class="americano.service.BookServiceMock"></bean>
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
+	
 	
 	<context:component-scan base-package="americano" />
 </beans>

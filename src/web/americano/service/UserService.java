@@ -25,7 +25,7 @@ public class UserService
 
 	public List<Book> getBooks( String username )
 	{
-		return null;
+		bookDao.getBooksOf( username );
 	}
 
 
