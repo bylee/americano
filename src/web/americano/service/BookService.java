@@ -1,16 +1,19 @@
 package americano.service;
 
-import java.util.List;
+import java.util.Collection;
 
-import americano.model.Book;
+import americano.model.Chapter;
+
 
 public class
 BookService
 {
-	public List<Book> getBooksOf( String username )
+	public Collection<Chapter>
+	getChapters(
+		final String bookId
+	)
 	{
 		return null;
 	}
-
 
 }

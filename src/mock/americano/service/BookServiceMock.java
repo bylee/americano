@@ -1,24 +1,24 @@
 package americano.service;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
-import americano.model.Book;
+import americano.model.Chapter;
 
 public class BookServiceMock
 extends BookService
 {
-	public List<Book> getBooksOf( String username )
+	public Collection<Chapter> getChapters( String bookId )
 	{
-		final ArrayList<Book> books = new ArrayList<Book>();
-		
-		final Book book1 = new Book();
-		
-		book1.setId( "aaa" );
-		book1.setTitle( "Hello, World" );
-		books.add( book1 );
-		
-		return books;
+		final ArrayList<Chapter> chpaters = new ArrayList<Chapter>();
+		if ( "aaa".equals( bookId ) )
+		{
+		}
+		else if ( "bbb".equals( bookId ) )
+		{
+			
+		}
+		return chpaters;
 	}
 
 }

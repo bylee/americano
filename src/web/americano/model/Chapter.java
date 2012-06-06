@@ -1,7 +1,10 @@
 package americano.model;
 
+import javax.persistence.Id;
+
 public class Chapter
 {
+	@Id
 	protected String id;
 	
 	protected String bookId;
@@ -15,6 +18,7 @@ public class Chapter
 	protected String subtitle;
 	
 	protected String author;
+	
 	
 
 }
