@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import americano.model.Book;
 import americano.model.User;
+import americano.service.BookService;
 import americano.service.UserService;
 
 @RequestMapping( "/user" )
@@ -22,6 +23,8 @@ extends AbstractController
 {
 	@Autowired
 	protected UserService userService;
+	
+	protected BookService bookService;
 
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
 	public @ResponseBody User
@@ -34,17 +37,6 @@ extends AbstractController
 		return user;
 	}
 
-	@RequestMapping( value = "/{user}/books.html", method = RequestMethod.GET )
-	public ModelAndView
-	formBooks(
-		@PathVariable( "user" ) final String username
-	)
-	{
-		final ModelAndView ret = new ModelAndView( "user/books" );
-		
-		return ret;
-	}
-
 	@RequestMapping( value = "/{user}/books", method = RequestMethod.GET )
 	public
 	@ResponseBody Collection<Book>
@@ -52,7 +44,7 @@ extends AbstractController
 		@PathVariable( "user" ) final String username
 	)
 	{
-		return userService.getBooks( username );
+		return bookService.getBooksOf( username );
 	}
 	
 
