@@ -9,8 +9,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class ChapterController {
 
 	@RequestMapping( "/chapter.html")
-	public ModelAndView getChapterHtml()
+	public ModelAndView formChapter()
 	{
-		return new ModelAndView( "chpater/chapter" );
+		return new ModelAndView( "chapter/chapter" );
 	}
 } 

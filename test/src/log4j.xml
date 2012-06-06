@@ -17,7 +17,7 @@
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework">
-		<level value="warn" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- Root Logger -->
