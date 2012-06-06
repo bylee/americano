@@ -28,6 +28,8 @@
 
 		<property name="packagesToScan" value="americano.model"/>
 	</bean>
+	
+	<bean class="americano.service.BookServiceMock"></bean>
 
 </beans>
 

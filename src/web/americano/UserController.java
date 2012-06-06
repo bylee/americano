@@ -24,6 +24,7 @@ extends AbstractController
 	@Autowired
 	protected UserService userService;
 	
+	@Autowired
 	protected BookService bookService;
 
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
