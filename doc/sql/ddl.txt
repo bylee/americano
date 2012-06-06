@@ -1,0 +1,39 @@
+create table user (
+	username varchar(16), 
+	password varchar(64),
+	iconId varchar(64),
+	pictureId varchar(64)
+);
+
+
+create table book (
+	id varchar(32), 
+	title varchar(32), 
+	subtitle varchar(32), 
+	author varchar(32), 
+	edition varchar(32), 
+	description varchar(512), 
+	keyword varchar(128), 
+	tag varchar(128), 
+	theme varchar(32), 
+	createdDate varchar(12), 
+	owner varchar(32)
+);
+
+
+create table chapter (
+	id varchar(32), 
+	bookId varchar(32), 
+	previousChapter varchar(32), 
+	title varchar(32), 
+	type varchar(32), 
+	subtitle varchar(32), 
+	author varchar(32)
+);
+
+create table binary (
+	id varchar(32), 
+	owner varchar(32), 
+	type varchar(32), 
+	contents blob
+);
