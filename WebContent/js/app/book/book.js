@@ -15,7 +15,7 @@ $(function() {
     
     url: function () {
       if (this.isNew()) {
-        return '/book';
+        return '/book/';
       } else {
         return '/book/'+ this.id;
       }
@@ -64,6 +64,8 @@ $(function() {
     
     detailBook: function(e) {
       console.log("detailBook");
+      console.log(e);
+      e.preventDefault();
     }
   });
   
@@ -111,13 +113,13 @@ $(function() {
       };
       
       var book = new Book((bookData));
-      var view = new BookView({model : book});
-      this.$('#book-list').append(view.render().el);
-      bookList.push(book);
       book.save(null,
       { success: function (model, response) {
-           model.id = response.responseText.id;
-           console.log(model.id);
+           console.log(model);
+           console.log(response);
+           //model.id = response.responseText.id;
+           //console.log(model.id);
+           bookList.push(response);
         },
         error: function (model, response) {
           var respon =  jQuery.parseJSON(response.responseText);//TODO removed
