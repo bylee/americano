@@ -4,10 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import americano.model.Book;
+import americano.model.User;
 
 public class UserServiceMock
 extends UserService
 {
+	public User getUser( String userId )
+	{
+		if ( "testuser".equals( userId ) )
+		{
+			final User user = new User();
+			
+			user.setUsername(  "testuser" );
+			user.setPassword( "1234" );
+			return user;
+		}
+		return null;
+	}
+	
 	public List<Book> getBooks( String username )
 	{
 		final ArrayList<Book> books = new ArrayList<Book>();

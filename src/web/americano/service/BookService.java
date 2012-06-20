@@ -4,11 +4,11 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import escode.util.ObjectUtils;
-
 import americano.dao.BookDao;
+import americano.dao.ChapterDao;
 import americano.model.Book;
 import americano.model.Chapter;
+import escode.util.ObjectUtils;
 
 
 public class
@@ -17,13 +17,16 @@ BookService
 	@Autowired
 	protected BookDao bookDao;
 	
+	@Autowired
+	protected ChapterDao chapterDao;
 	
-	public Collection<Chapter>
+	public
+	Collection<Chapter>
 	getChapters(
 		final String bookId
 	)
 	{
-		return null;
+		return chapterDao.getChapterIn( bookId );
 	}
 	
 	public Book

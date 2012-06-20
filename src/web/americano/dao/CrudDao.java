@@ -6,7 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CrudDao
+public class
+CrudDao
 extends AbstractDao
 {
 	public List<?>

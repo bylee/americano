@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import americano.model.User;
 
 @Repository
-public class UserDao
+public class
+UserDao
 extends AbstractDao
 {
 	protected final Logger logger = LoggerFactory.getLogger( getClass() );
