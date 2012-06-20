@@ -3,6 +3,9 @@ package americano.service;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import escode.util.ObjectUtils;
+
+import americano.model.Book;
 import americano.model.Chapter;
 
 public class BookServiceMock
@@ -34,6 +37,13 @@ extends BookService
 			chapters.add( chapter2 );
 		}
 		return chapters;
+	}
+
+	public Book
+	createBook( final Book book )
+	{
+		book.setId( ObjectUtils.generateGUID( book ) );
+		return book;
 	}
 
 }

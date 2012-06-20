@@ -1,7 +1,13 @@
 package americano.model;
 
-public class Binary
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class
+Binary
 {
+	@Id
 	protected String id;
 	
 	protected String owner;

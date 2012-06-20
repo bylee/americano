@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import americano.model.Book;
 import americano.model.Chapter;
 import americano.service.BookService;
 
@@ -27,6 +28,16 @@ public class BookController
 	)
 	{
 		return bookService.getChapters( bookId );
+	}
+	
+	@RequestMapping( value = "/", method = RequestMethod.POST )
+	public
+	@ResponseBody Book
+	create(
+		Book book
+	)
+	{
+		return bookService.createBook( book );
 	}
 
 }
