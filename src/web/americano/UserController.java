@@ -26,6 +26,18 @@ extends AbstractController
 	@Autowired
 	protected BookService bookService;
 
+	@RequestMapping( value = "/", method = RequestMethod.POST )
+	public
+	@ResponseBody User
+	createUser(
+		User user
+	)
+	{
+		User createdUser = userService.createUser( user );
+		
+		return createdUser;
+	}
+
 	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
 	public @ResponseBody User
 	getUser(
@@ -36,7 +48,7 @@ extends AbstractController
 		
 		return user;
 	}
-
+	
 	@RequestMapping( value = "/{id}/books", method = RequestMethod.GET )
 	public
 	@ResponseBody Collection<Book>

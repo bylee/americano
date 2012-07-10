@@ -16,7 +16,17 @@ public class UserService
 	
 	@Autowired
 	protected BookDao bookDao;
-	
+
+	public User createUser( final User user )
+	{
+		userDao.get( User.class, user.getUsername() );
+		userDao.insert( user );
+		
+		final User passwordMaskedUser = (User) user.clone();
+		passwordMaskedUser.setPassword( null );
+		return passwordMaskedUser;
+	}
+
 	public User getUser( final String userId )
 	{
 		return userDao.getUser( userId );

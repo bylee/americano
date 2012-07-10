@@ -9,6 +9,13 @@ import americano.model.User;
 public class UserServiceMock
 extends UserService
 {
+	public User createUser( User user )
+	{
+		final User u = (User) user.clone();
+		u.setPassword( null );
+		return u;
+	}
+	
 	public User getUser( String userId )
 	{
 		if ( "testuser".equals( userId ) )

@@ -36,6 +36,17 @@ extends BookService
 			chapter2.setTitle( "bbb-Chapter2" );
 			chapters.add( chapter2 );
 		}
+		else if ( "testbook".equals( bookId ) )
+		{
+			final Chapter chapter1 = new Chapter();
+			chapter1.setId( "ch1" );
+			chapter1.setTitle( "bbb-Chapter1" );
+			chapters.add( chapter1 );
+			final Chapter chapter2 = new Chapter();
+			chapter2.setId( "ch2" );
+			chapter2.setTitle( "bbb-Chapter2" );
+			chapters.add( chapter2 );
+		}
 		return chapters;
 	}
 

@@ -9,6 +9,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 @Entity
 public class
 User
+implements Cloneable
 {
 	@Id
 	protected String username;
@@ -119,5 +120,17 @@ User
 		return new EqualsBuilder()
 		.append( this.username, other.username )
 		.isEquals();
+	}
+	
+	
+	public Object clone()
+	{
+		final User ret = new User();
+		ret.username = username;
+		ret.password = password;
+		ret.pictureId = pictureId;
+		ret.iconId = iconId;
+		
+		return ret;
 	}
 }

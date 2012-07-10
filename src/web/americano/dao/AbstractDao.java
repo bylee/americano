@@ -61,6 +61,17 @@ public class AbstractDao
 		return ret;
 	}
 	
+	public <T> boolean exists( Class<T> clazz, Serializable id )
+	{
+		T t = get( clazz, id );
+		if ( null != t )
+		{
+			return false;
+		}
+		
+		return true;
+	}
+	
 	protected List<?> find(
 		final String queryStr
 	)

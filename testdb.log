@@ -1,6 +1,17 @@
-/*C4*/SET SCHEMA PUBLIC
+/*C6*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C5*/SET SCHEMA PUBLIC
+/*C7*/SET SCHEMA PUBLIC
+drop table Binary if exists
+drop table Book if exists
+drop table User if exists
+create table Binary (id varchar(255) not null, contents varbinary(255), owner varchar(255), type varchar(255), primary key (id))
+create table Book (id varchar(255) not null, author varchar(255), createdDate varchar(255), description varchar(255), edition varchar(255), keyword varchar(255), owner varchar(255), subtitle varchar(255), tag varchar(255), theme varchar(255), title varchar(255), primary key (id))
+create table User (username varchar(255) not null, iconId varchar(255), password varchar(255), pictureId varchar(255), primary key (username))
+INSERT INTO USER VALUES('bylee',NULL,'password',NULL)
+COMMIT
+/*C8*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C9*/SET SCHEMA PUBLIC
 drop table Binary if exists
 drop table Book if exists
 drop table User if exists
